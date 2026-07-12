@@ -102,12 +102,22 @@ push workflow files, so it does carry the Workflows scope.
 
 `bundler-cache: true` in the workflow requires `Gemfile.lock` to stay committed.
 
+## The CV
+
+✅ Live at `/assets/Tianlang-Chen-CV.pdf`, linked from the rail. **Built here, not
+downloaded from Overleaf** — `tools/build-cv.sh` compiles `../cv` and drops the PDF
+into `assets/`. Re-run it after any CV change and commit the new PDF.
+
+The earlier note that this machine "cannot build the CV" was wrong. TinyTeX is in
+`$HOME/.TinyTeX` with `tlmgr`; only `upquote` was genuinely missing. What actually
+broke the build was that **TinyTeX does not symlink `biber` into `~/bin`**, so
+latexmk died with `biber: command not found` — and then *kept replaying that cached
+failure* ("gave an error in previous invocation") until the outdir was wiped. The
+script puts `$HOME/.TinyTeX/bin/x86_64-linux` on PATH to avoid all of it.
+
 ## Still open
 
-- **No CV PDF.** The rail has no `cv` entry. `cv/` is LaTeX on Overleaf and this
-  machine's TeX is incomplete (missing `upquote.sty` + Cochineal), so the PDF has
-  to come from Overleaf.
-- **The long About bio is unwritten** (`PROFILE.md` §1 marks the long version 待写).
-  The homepage currently leads with the medium bio.
+- **The long About bio is unwritten** (`PROFILE.md` §1 marks the long version as
+  待写). The homepage currently leads with the medium bio, which is three sentences.
 - No posts yet, so `post.html` / `archive.html` / pagination are only smoke-tested,
   never exercised with real content.
