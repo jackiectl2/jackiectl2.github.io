@@ -148,8 +148,10 @@ layout: default
     <li><a href="mailto:{{ p.identity.email }}"><i class="fa fa-envelope-o"></i>{{ p.identity.email }}</a></li>
     <li><a href="https://github.com/{{ p.identity.github }}"><i class="fa fa-github"></i>{{ p.identity.github }}</a></li>
     {% for link in p.links %}
-      {% if link.live and link.label == "LinkedIn" %}
-      <li><a href="{{ link.url }}"><i class="fa fa-linkedin"></i>LinkedIn</a></li>
+      {% if link.live and link.label != "Email" %}
+      {% unless link.url contains site.domain %}
+      <li><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.label }}</a></li>
+      {% endunless %}
       {% endif %}
     {% endfor %}
   </ul>

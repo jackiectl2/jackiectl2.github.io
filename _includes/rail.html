@@ -25,13 +25,17 @@
       <li>
         <a href="https://github.com/{{ p.identity.github }}"><i class="fa fa-github"></i>{{ p.identity.github }}</a>
       </li>
+      {% comment %}
+        Skip the entry that points back at this very site — profile.json lists it
+        because the profile README needs it, but linking here to here is noise.
+      {% endcomment %}
       {% for link in p.links %}
         {% if link.live %}
+        {% unless link.url contains site.domain %}
         <li>
-          <a href="{{ link.url }}">
-            <i class="fa fa-{% if link.label == 'LinkedIn' %}linkedin{% else %}envelope-o{% endif %}"></i>{{ link.label }}
-          </a>
+          <a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.label }}</a>
         </li>
+        {% endunless %}
         {% endif %}
       {% endfor %}
     </ul>
