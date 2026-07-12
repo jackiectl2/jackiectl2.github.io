@@ -13,6 +13,7 @@ exclude:
   - tools
   - README.md
   - LICENSE.md
+  - CLAUDE.md
 
 # Site settings
 title: Tianlang (Jackie) Chen

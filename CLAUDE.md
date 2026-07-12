@@ -76,14 +76,38 @@ The login node is fine for this — a dev server is not heavy compute.
   --window-size=1280,3600 http://127.0.0.1:4000/`. Claude can Read the PNG, so the
   design loop is closed without the user having to look.
 
-## Deployment — NOT SOLVED YET
+## Deployment — solved, via Actions
 
-🔴 **GitHub Pages' own Jekyll cannot build this site.** It needs `jekyll-archives`
-and `jekyll-paginate-v2`, neither of which is on the Pages plugin allowlist. It
-must be built by **GitHub Actions** and deployed as a static artifact. That
-workflow does not exist yet — writing it is the next task.
+✅ **Live at <https://jackiectl.github.io>** since 2026-07-11.
 
-Also still open:
-- Never pushed. `origin` is an empty repo.
-- No CV PDF linked anywhere; the rail has no `cv` entry yet.
-- `circle.yml` / `stackbit.yaml` are leftover upstream CI/CMS config, unused.
+**GitHub Pages' own Jekyll cannot build this site.** Pages' built-in build runs in
+safe mode and only loads plugins from its allowlist; `jekyll-archives` and
+`jekyll-paginate-v2` are not on it, so they would be **silently ignored** — the
+site would still publish, but `/category/*` and `/blog/page/N/` would 404. (This
+is what the "Sorry, not GitHub pages friendly!" comment in upstream's `_config.yml`
+was warning about.)
+
+So `.github/workflows/deploy.yml` builds the site itself and hands Pages the
+finished `_site/` as a static artifact. Two things make it work without any manual
+Settings click:
+
+- `permissions: pages: write, id-token: write` on the job
+- `actions/configure-pages@v5` with **`enablement: true`**, which turns Pages on
+  and points it at Actions using the job's own `GITHUB_TOKEN`
+
+⚠️ The **fine-grained PAT cannot do this** — `POST /repos/{o}/{r}/pages` returns
+403 (`Resource not accessible by personal access token`). Do not waste time
+retrying it from the CLI; the in-workflow `GITHUB_TOKEN` is the way. The PAT *can*
+push workflow files, so it does carry the Workflows scope.
+
+`bundler-cache: true` in the workflow requires `Gemfile.lock` to stay committed.
+
+## Still open
+
+- **No CV PDF.** The rail has no `cv` entry. `cv/` is LaTeX on Overleaf and this
+  machine's TeX is incomplete (missing `upquote.sty` + Cochineal), so the PDF has
+  to come from Overleaf.
+- **The long About bio is unwritten** (`PROFILE.md` §1 marks the long version 待写).
+  The homepage currently leads with the medium bio.
+- No posts yet, so `post.html` / `archive.html` / pagination are only smoke-tested,
+  never exercised with real content.
