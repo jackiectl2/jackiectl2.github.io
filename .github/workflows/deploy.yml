@@ -1,0 +1,53 @@
+name: Build and deploy to GitHub Pages
+
+# GitHub Pages' built-in Jekyll runs in safe mode and only loads plugins from its
+# own allowlist. This site needs jekyll-archives and jekyll-paginate-v2, neither
+# of which is on it — under the built-in build they would be silently ignored and
+# the category/tag archives and /blog/page/N/ would 404. So we build the site
+# ourselves here and hand Pages the finished _site/ as a static artifact.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      - name: Build
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
