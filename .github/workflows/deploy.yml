@@ -32,8 +32,12 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
 
+      # enablement: turns Pages on (and points it at Actions) using this job's
+      # GITHUB_TOKEN, so the repo needs no manual Settings click.
       - uses: actions/configure-pages@v5
         id: pages
+        with:
+          enablement: true
 
       - name: Build
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
