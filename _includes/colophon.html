@@ -1,0 +1,22 @@
+{% assign p = site.data.profile %}
+<footer class="colophon">
+
+  {% assign upcoming = p.coming_soon | where_exp: "i", "i.what != ''" | where_exp: "i", "i.label != site.domain" %}
+  {% if upcoming.size > 0 %}
+  <p class="colophon-brand">
+    {% for item in upcoming %}
+      <b>{{ item.label }}</b> &mdash; {{ item.what }}{% unless forloop.last %}<br>{% endunless %}
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  <p>
+    Built with <a href="https://jekyllrb.com">Jekyll</a> on the
+    <a href="https://github.com/bencentra/centrarium">Centrarium</a> theme by Ben Centra (MIT).
+    &nbsp;&middot;&nbsp;
+    <a href="{{ "/feed.xml" | prepend: site.baseurl }}">RSS</a>
+    &nbsp;&middot;&nbsp;
+    &copy; {{ site.time | date: '%Y' }} {{ p.identity.display }}
+  </p>
+
+</footer>

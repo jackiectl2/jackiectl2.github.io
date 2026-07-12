@@ -1,88 +1,156 @@
 ---
 layout: default
-pagination: 
-  enabled: true
 ---
-<div class="home">
+{% assign p = site.data.profile %}
 
-<div class="site-header-container {% if site.cover %}has-cover{% endif %}" {% if site.cover %}style="background-image: url({{ site.cover | prepend: site.baseurl }});"{% endif %}>
-  <div class="scrim {% if site.cover %}has-cover{% endif %}">
-    <header class="site-header">
-      <h1 class="title">{{ site.title }}</h1>
-      {% if site.subtitle %}<p class="subtitle">{{ site.subtitle }}</p>{% endif %}
-    </header>
+<p class="lede">{{ p.bio }}</p>
+
+<p class="lede-focus">
+  {% for f in site.focus %}{{ f }}{% unless forloop.last %}<span class="sep">&middot;</span>{% endunless %}{% endfor %}
+</p>
+
+<!--
+  Every list below iterates over _data/profile.json. Adding an entry is a data
+  edit, never a template edit — and each list ends in a visible placeholder, so
+  the headroom is something a visitor can actually see.
+-->
+
+<section class="sec" id="work">
+  <div class="sec-head">
+    <h2 class="sec-title">Work</h2>
+    <span class="sec-count">{{ p.research | size }} &middot; ongoing</span>
   </div>
-</div>
 
-<div class="wrapper">
-<ul class="post-list">
-  {% for post in paginator.posts %}
-  <li>
-    <h2>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>{{ post.content | strip_html | truncatewords: 50 }}</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">{{ post.date | date: "%B %-d, %Y" }}</div>
-      <div class="post-categories">
-      {% if post.categories.size > 0 %}in {% for cat in post.categories %}
-        {% if site.jekyll-archives %}
-        <a href="{{ site.baseurl }}/category/{{ cat }}">{{ cat | capitalize }}</a>{% if forloop.last == false %}, {% endif %}
-        {% else %}
-        <a href="{{ site.baseurl }}/posts/#{{ cat }}">{{ cat | capitalize }}</a>{% if forloop.last == false %}, {% endif %}
-        {% endif %}
-      {% endfor %}{% endif %}
+  <ul class="works">
+    {% for w in p.research %}
+    <li class="work">
+      <div class="work-id">{{ w.id }}</div>
+      <div class="work-body">
+        <h3 class="work-title">{{ w.title }}</h3>
+        {% if w.hook %}<p class="work-hook">{{ w.hook }}</p>{% endif %}
+        {% if w.detail %}<p class="work-detail">{{ w.detail }}</p>{% endif %}
       </div>
-    </section>
-  </li>
-  {% if forloop.last == false %}
-  <hr>
+    </li>
+    {% endfor %}
+
+    <li class="work work--todo">
+      <div class="work-id">&#43;</div>
+      <div class="work-body">
+        <p class="work-more">{{ p.labels.research_more }}</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section class="sec" id="publications">
+  <div class="sec-head">
+    <h2 class="sec-title">Publications</h2>
+    <span class="sec-count">{{ p.publications | size }}</span>
+  </div>
+
+  {% if p.publications.size > 0 %}
+  <ul class="works">
+    {% for pub in p.publications %}
+    <li class="work">
+      <div class="work-id">{{ forloop.index }}</div>
+      <div class="work-body">
+        <h3 class="work-title">{{ pub.title }}</h3>
+        {% if pub.venue %}<p class="work-hook">{{ pub.venue }}</p>{% endif %}
+        {% if pub.authors %}<p class="work-detail">{{ pub.authors }}</p>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty-note">{{ p.labels.publications_none }}</p>
   {% endif %}
-  {% endfor %}
-</ul>
+</section>
 
-<nav class="pagination" role="navigation">
-	<p>
-    {% if paginator.previous_page %}
-			{% if paginator.page == 2 %}
-			<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">
-        <span class="fa-stack fa-lg">
-          <i class="fa fa-square fa-stack-2x"></i>
-          <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
-        </span>
-      </a>
-			{% else %}
-			<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.next_page_path }}">
-				<span class="fa-stack fa-lg">
-					<i class="fa fa-square fa-stack-2x"></i>
-					<i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
-				</span>
-			</a>
-			{% endif %}
-		{% else %}
-		<span class="fa-stack fa-lg">
-      <i class="fa fa-square fa-stack-2x"></i>
-      <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
-    </span>
-		{% endif %}
-		<span class="page-number">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-		{% if paginator.next_page %}
-		<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.next_page_path }}">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-square fa-stack-2x"></i>
-        <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-		{% else %}
-		<span class="fa-stack fa-lg">
-      <i class="fa fa-square fa-stack-2x"></i>
-      <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
-    </span>
-		{% endif %}
-	</p>
-</nav>
+<section class="sec" id="experience">
+  <div class="sec-head">
+    <h2 class="sec-title">Experience</h2>
+    <span class="sec-count">{{ p.timeline | size }}</span>
+  </div>
 
-</div>
-</div>
+  <ul class="timeline">
+    {% for t in p.timeline %}
+    <li class="tl-item">
+      <div class="tl-when">{{ t.when }}</div>
+      <div>
+        <p class="tl-what">{{ t.what }}</p>
+        {% if t.detail != "" %}<p class="tl-detail">{{ t.detail }}</p>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+
+    <li class="tl-item tl-item--todo">
+      <div class="tl-when">&hellip;</div>
+      <div>
+        <p class="work-more">{{ p.labels.timeline_more }}</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section class="sec" id="skills">
+  <div class="sec-head">
+    <h2 class="sec-title">Skills</h2>
+  </div>
+
+  <ul class="skills">
+    {% for group in p.skills %}
+    <li class="skill-group">
+      <div class="skill-name">{{ group.group }}</div>
+      <ul class="skill-items">
+        {% for item in group.items %}
+        <li class="chip">{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="sec" id="writing">
+  <div class="sec-head">
+    <h2 class="sec-title">Writing</h2>
+    <span class="sec-count">{{ site.posts | size }}</span>
+  </div>
+
+  {% if site.posts.size > 0 %}
+  <ul class="posts">
+    {% for post in site.posts limit: 5 %}
+    <li class="post-item">
+      <div class="post-when">{{ post.date | date: "%Y.%m.%d" }}</div>
+      <div>
+        <h3 class="post-item-title">
+          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h3>
+        <p class="post-excerpt">{{ post.content | strip_html | truncatewords: 28 }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if site.posts.size > 5 %}
+  <p class="sec-more"><a href="{{ "/blog/" | prepend: site.baseurl }}">All posts &rarr;</a></p>
+  {% endif %}
+  {% else %}
+  <p class="empty-note">{{ p.labels.timeline_more }}</p>
+  {% endif %}
+</section>
+
+<section class="sec" id="contact">
+  <div class="sec-head">
+    <h2 class="sec-title">Contact</h2>
+  </div>
+
+  <ul class="contact-list">
+    <li><a href="mailto:{{ p.identity.email }}"><i class="fa fa-envelope-o"></i>{{ p.identity.email }}</a></li>
+    <li><a href="https://github.com/{{ p.identity.github }}"><i class="fa fa-github"></i>{{ p.identity.github }}</a></li>
+    {% for link in p.links %}
+      {% if link.live and link.label == "LinkedIn" %}
+      <li><a href="{{ link.url }}"><i class="fa fa-linkedin"></i>LinkedIn</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>

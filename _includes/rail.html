@@ -1,0 +1,40 @@
+{% assign p = site.data.profile %}
+<aside class="rail">
+  <div class="rail-inner">
+
+    {% if site.seal != "" %}
+    <a href="{{ site.baseurl }}/" class="seal" aria-label="Home" title="{{ p.identity.name_zh }}">{{ site.seal }}</a>
+    {% endif %}
+
+    <h1 class="rail-name"><a href="{{ site.baseurl }}/">{{ p.identity.display }}</a></h1>
+
+    <p class="rail-role">
+      {{ p.identity.role }}<br>
+      {{ p.identity.affiliation }}
+    </p>
+
+    <nav role="navigation">
+      <ul class="rail-nav">
+        {% for item in site.nav %}
+        <li><a href="{{ item.url | prepend: site.baseurl }}">{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <ul class="rail-links">
+      <li>
+        <a href="https://github.com/{{ p.identity.github }}"><i class="fa fa-github"></i>{{ p.identity.github }}</a>
+      </li>
+      {% for link in p.links %}
+        {% if link.live %}
+        <li>
+          <a href="{{ link.url }}">
+            <i class="fa fa-{% if link.label == 'LinkedIn' %}linkedin{% else %}envelope-o{% endif %}"></i>{{ link.label }}
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+  </div>
+</aside>

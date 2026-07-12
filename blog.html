@@ -1,0 +1,44 @@
+---
+layout: default
+title: Writing
+permalink: /blog/
+pagination:
+  enabled: true
+---
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-title">Writing</h2>
+    <span class="sec-count">{{ site.posts | size }}</span>
+  </div>
+
+  {% if paginator.posts.size > 0 %}
+  <ul class="posts">
+    {% for post in paginator.posts %}
+    <li class="post-item">
+      <div class="post-when">{{ post.date | date: "%Y.%m.%d" }}</div>
+      <div>
+        <h3 class="post-item-title">
+          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h3>
+        <p class="post-excerpt">{{ post.content | strip_html | truncatewords: 40 }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if paginator.total_pages > 1 %}
+  <nav class="pagination" role="navigation">
+    {% if paginator.previous_page %}
+    <a href="{{ site.baseurl }}{{ paginator.previous_page_path }}">&larr; Newer</a>
+    {% endif %}
+    {% if paginator.next_page %}
+    <a href="{{ site.baseurl }}{{ paginator.next_page_path }}">Older &rarr;</a>
+    {% endif %}
+    <span class="page-number">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <p class="empty-note">{{ site.data.profile.labels.timeline_more }}</p>
+  {% endif %}
+</section>

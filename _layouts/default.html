@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   {% include head.html %}
 
   <body>
 
-    {% include header.html %}
+    <div class="shell">
 
-    <div class="page-content">
+      {% include rail.html %}
+
+      <main class="stream" role="main">
         {{ content }}
+        {% include colophon.html %}
+      </main>
+
     </div>
 
-    {% include footer.html %}
+    {% include scripts.html %}
 
   </body>
 

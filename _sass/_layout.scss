@@ -1,453 +1,624 @@
-// Primary site layout for Centrarium Theme
-
-/*
-*	Variables
-*/
-$b3: 480px;
-$mobile: $b3;
-$b2: 768px;
-$tablet: $b2;
-$b1: 960px;
-$desktop: $b1;
+// Layout — xuan-paper.
+//
+// Asymmetric two-column shell: a sticky left rail (identity + nav) separated
+// from a scrolling content stream by a single full-height hairline. Replaces
+// Centrarium's centered blog column + full-bleed cover hero.
 
 /*
 *	Globals
 */
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	background-color: $paper;
 }
 
-ol.default {
-  @extend %default-ol;
+::selection {
+	background: rgba($vermilion, 0.16);
 }
 
-ul.default {
-	@extend %default-ul;
+ol.default { @extend %default-ol; }
+ul.default { @extend %default-ul; }
+
+.han {
+	font-family: $han-font-family;
+	font-weight: 600;
+}
+
+.mono {
+	font-family: $mono-font-family;
 }
 
 code {
-	background-color: #eee;
+	background-color: $paper-sunken;
+	font-family: $mono-font-family;
+	font-size: 0.875em;
 	display: inline-block;
-	border-radius: 3px;
-	padding: 0 3px;
+	border-radius: $base-border-radius;
+	padding: 0 4px;
+}
+
+// highlight.js ships its own background; force it back onto the paper palette.
+pre {
+	background-color: $paper-sunken;
+	border: 1px solid $rule;
+	border-radius: $base-border-radius;
+	overflow-x: auto;
+	padding: 0.75rem 1rem;
+}
+
+pre code,
+pre code.hljs {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	font-size: 0.8125rem;
+	display: block;
 }
 
 blockquote {
-	color: $medium-gray;
+	color: $ink-muted;
 	font-style: italic;
-	border-left: 2px solid $light-gray;
+	border-left: 2px solid $vermilion;
 	margin-left: 0;
-	padding-left: 3em;
-}
-
-pre code.hljs {
-	font-size: modular-scale(-1);
-}
-
-.page-divider {
-	$divider-color: $light-gray;
-  display: block;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  border-top: 1px solid $divider-color;
-  .one {
-    position: relative;
-    top: -9px;
-    display: block;
-    background: $divider-color;
-    width: 18px;
-    height: 18px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 50%;
-  }
-  .two {
-    position: relative;
-    top: -26px;
-    display: block;
-    background: $white;
-    width: 16px;
-    height: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 50%;
-  }
+	padding-left: 1.5em;
 }
 
 .tooltip {
-	border-bottom: 1px dotted $medium-gray;
+	border-bottom: 1px dotted $ink-faint;
 }
 
+/*
+*	Shell — the asymmetric grid
+*/
+.shell {
+	max-width: $shell-max-width;
+	margin: 0 auto;
+	padding: 0 1.5rem;
 
-.site-header-container, .post-header-container {
-	width: 100%;
-	text-align: center;
-	&.has-cover {
-		color: $white;
-		text-shadow: 0 2px 1px rgba(0,0,0,0.67) !important;
-		background-position: 50% 50%;
-		background-size: cover;
-		.title {
-			font-size: modular-scale(6);
-		}
-		.subtitle, .info {
-			font-size: modular-scale(1);
-		}
-	}
-	.scrim {
-		padding: 3em 1em;
-		&.has-cover {
-			background-color: rgba(0,0,0,0.2);
-			padding: 6em 1em !important;
-			@include media($tablet) {
-				padding: 9em 1em !important;
-			}
-		}
+	@media (min-width: $bp-wide) {
+		display: grid;
+		grid-template-columns: $rail-width minmax(0, 1fr);
+		gap: 0;
+		padding: 0 2rem;
 	}
 }
 
 /*
-*	Header
+*	Left rail
 */
-.navigation {
-	box-shadow: 0 2px $highlight-color;
-	padding: 0 1em;
-	margin: 0;
-	// Remove this to make header scrollable again
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	background: $white;
-	z-index: 1;
-	/*
-	*	Navigation Menu - http://refills.bourbon.io/unstyled/ (see "Navigation")
-	*/
-  // Mobile view
-  .navigation-menu-button {
-    display: block;
-    float: right;
-    margin: 0;
-    font-size: 1.5em;
-    padding-top: 0.5em;
-    @include media ($tablet) {
-      display: none;
-    }
-  }
-  // Nav menu
-  .navigation-wrapper {
-  	@include outer-container;
-    @include clearfix;
-    position: relative;
-  }
-  .logo {
-    float: left;
-    height: 4em;
-    @include media ($tablet) {
-    	padding-left: $em-base;
-    }
-    img {
-      max-height: 2.5em;
-      margin-top: 0.75em;
-      padding-right: 1em;
-    }
-    span {
-    	font-size: 1.25em;
-    }
-  }
-  nav {
-    float: none;
-    padding: 1.25em 0;
-    @include media ($tablet) {
-      float: right;
-      line-height: 1.5em;
-    }
-  }
-  ul.navigation-menu {
-    clear: both;
-    display: none;
-    margin: 0 auto;
-    overflow: visible;
-    padding: 0;
-    width: 100%;
-    @include media ($tablet) {
-      display: block;
-      margin: 0;
-      padding: 0;
-    }
-    &.show {
-      display: block;
-    }
-  }
-  // Nav items
-  ul li.nav-link {
-    display: block;
-    text-align: right;
-    width: 100%;
-    padding: 0.25em 0;
-    @include media ($tablet) {
-      background: transparent;
-      display: inline;
-      text-decoration: none;
-      width: auto;
-    }
-  }
-  li.nav-link {
-  	a {
-	    display: inline-block;
-	    @include media ($tablet) {
-	      padding-right: 1.5em;
-	    }
-	  }
-	  &:last-child a {
-	  	@include media ($tablet) {
-    		padding-right: 1em;
-    	}
-    }
-  }
-}
+.rail {
+	padding: 2.5rem 0 1.5rem;
+	border-bottom: 1px solid $rule;
 
-/*
-*	Body
-*/
-.page-content {
-	// Remove this to make header scrollable again
-	margin-top: 66px;
-	.wrapper {
-		@include outer-container;
-		padding: 1em;
-	}
-	/*
-	*	index.html
-	*/
-	.post-list {
-		padding-top: 1em !important;
-		@extend %default-ul;
-	}
-	.post-meta {
-		@include outer-container;
-		// padding: 1em 0;
-		color: $medium-gray;
-		.post-date {
-			@include span-columns(6);
-			text-align: left;
-			font-size: 0.9em;
-		}
-		.post-categories {
-			@include span-columns(6);
-			margin-right: 0;
-			text-align: right;
-			font-size: 0.9em;
-		}
-	}
-	.pagination {
-		padding-top: 2em;
-		text-align: center;
-		color: $medium-gray;
-		.page-number {
-			padding: 0 1em;
-		}
-    a.newer-posts {
-      text-decoration: none;
-    }
-	}
-	.site-header-container {
-		color: $white;
-		text-shadow: 0 2px 1px rgba(0,0,0,0.33);
-		background-color: $highlight-color;
-		.site-header{
-			.title {
-				font-size: modular-scale(6);
-			}
-			.subtitle {
-				font-style: italic;
-				font-size: modular-scale(1);
-			}
-		}
-	}
-	img {
-		display: block;
-		margin: auto;
-		width: 90%;
-	}
-	/*
-	*	Posts
-	*/
-	.post {
-		ul {
-			margin-bottom: 1em;
-		}
-		.post-header-container {
-			.scrim {
-				padding: 2em 1em 1em 1em;
-			}
-		}
-		.post-meta {
-			padding-bottom: 1em;
-		}
-		.post-content {
-			padding: 1em 0;
-		}
-		.tags {
-			font-size: 0.9em;
-		}
-		.rss {
-			margin: 1em 0 0 0;
-			@include span-columns(12);
-			@include media ($tablet) {
-				margin: 1em 0;
-				@include span-columns(6);
-			}
-		}
-		.share {
-			font-weight: bold;
-			margin: 0 0 1em 0;
-			@include span-columns(12);
-			@include media ($tablet) {
-				@include span-columns(6);
-				margin: 1em 0;
-				text-align: right;
-			}
-			a {
-				width: 1em;
-				padding: 0 0.25em;
-				text-decoration: none;
-			}
-		}
-		.disqus {
-			@include span-columns(12);
-		}
-		.post-navigation {
-			font-size: 0.9em;
-			display: block;
-			width: auto;
-			.prev-post {
-				display: block;
-				width: 50%;
-				float: left;
-				margin: 1em 0;
-			}
-			.next-post {
-				display: block;
-				width: 50%;
-				float: left;
-				margin: 1em 0;
-				text-align: right;
-			}
-		}
-	}
-	/*
-	*	Pages
-	*/
-	.page {
-		.post-header {
-			padding: 0.5em 1em 1em 1em;
-			text-align: center;
-		}
-		.posts-list {
-			@extend %default-ul;
-			li {
-				padding: modular-scale(-4);
-				padding-left: 0;
-			}
-			.desc {
-				font-size: 0.9em;
-			}
-			.post-date {
-				color: $medium-gray;
-			}
-		}
-		.profile {
-			max-width: 320px;
-			margin: auto;
-			padding-bottom: 0.5em;
- 		}
+	@media (min-width: $bp-wide) {
+		// The rail stretches to the full row height, so its right border draws
+		// the full-height hairline; the inner block is what actually sticks.
+		border-bottom: none;
+		border-right: 1px solid $rule;
+		padding: 3.5rem 2.5rem 3rem 0;
 	}
 }
 
-/*
-*	Footer
-*/
-.site-footer {
-	$link-color: $white;
-	padding: 1em 1em 2em 1em;
-	background-color: $highlight-color;
-	color: $white;
+.rail-inner {
+	@media (min-width: $bp-wide) {
+		position: sticky;
+		top: 3.5rem;
+	}
+}
+
+.seal {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	background-color: $vermilion;
+	color: $paper-raised;
+	font-family: $han-font-family;
+	font-weight: 600;
+	font-size: 1.5rem;
+	line-height: 1;
+	border-radius: 1px;
+	margin-bottom: 1.25rem;
+	// The carved-stone look: a hair of inner shadow, no gloss.
+	box-shadow: inset 0 0 0 1px rgba(#000, 0.12);
+}
+
+.rail-name {
+	font-size: 1.375rem;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
+	margin: 0 0 0.5rem;
+	color: $ink;
+	a { color: inherit; text-decoration: none; }
+}
+
+.rail-role {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: $ink-muted;
+	margin: 0 0 1.75rem;
+}
+
+.rail-nav {
+	@extend %default-ul;
+	margin: 0 0 1.75rem;
+
+	li { margin: 0 0 0.5rem; }
+
 	a {
-	  color: $link-color;
-	  &:active,
-	  &:focus,
-	  &:hover {
-	    color: darken($link-color, 10%);
-	  }
-	  &:active,
-	  &:focus {
-	    outline: none;
-	  }
-	}
-	.wrapper {
-		@include outer-container;
-	}
-	.footer-heading {
+		font-family: $mono-font-family;
+		font-size: 0.8125rem;
+		color: $ink-muted;
+		text-decoration: none;
+		display: inline-block;
+		position: relative;
+		padding-left: 0.9rem;
 
-	}
-	/*
-	*	Site Navigation (left)
-	*/
-	.site-navigation {
-		@include span-columns(12);
-		@include media ($mobile) {
-			@include span-columns(6);
+		// Seal-red tick that slides in on hover.
+		&::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0.55em;
+			width: 5px;
+			height: 5px;
+			background-color: $vermilion;
+			opacity: 0;
+			transform: translateX(-3px);
+			transition: opacity 0.14s ease, transform 0.14s ease;
 		}
-		@include media ($tablet) {
-			@include span-columns(4);
-		}
-		font-size: 0.9em;
-		ul {
-			@extend %default-ul;
-		}
-	}
-	/*
-	*	Contact Info (center)
-	*/
-	.site-contact {
-		margin-top: 1em;
-		@include span-columns(12);
-		@include media ($mobile) {
-			@include span-columns(6);
-			margin-top: 0;
-			margin-right: 0;
-		}
-		@include media ($tablet) {
-			@include span-columns(4);
-			margin-top: 0;
-		}
-		font-size: 0.9em;
-		i {
-			width: 1.25em;
-			text-align: center;
-		}
-		ul {
-			@extend %default-ul;
+
+		&:hover,
+		&:focus {
+			color: $ink;
+			text-decoration: none;
+			&::before { opacity: 1; transform: translateX(0); }
 		}
 	}
-	/*
-	*	Site Description/Signature (right)
-	*/
-	.site-signature {
-		margin-top: 1em;
-		@include span-columns(12);
-		@include media ($tablet) {
-			@include span-columns(4);
-			margin-right: 0;
-			margin-top: 0;
-		}
-		font-size: 0.9em;
-		a {
-			text-decoration: underline;
-		}
+}
+
+.rail-links {
+	@extend %default-ul;
+	font-size: 0.8125rem;
+
+	li { margin: 0 0 0.4rem; }
+
+	a {
+		color: $ink-muted;
+		text-decoration: none;
+		&:hover { color: $vermilion; text-decoration: underline; }
+	}
+
+	i {
+		width: 1.25em;
+		text-align: center;
+		margin-right: 0.4em;
+		color: $ink-faint;
+	}
+}
+
+/*
+*	Right stream
+*/
+.stream {
+	padding: 2.5rem 0 0;
+	min-width: 0;
+
+	@media (min-width: $bp-wide) {
+		padding: 3.5rem 0 0 3rem;
+	}
+}
+
+// Lede — the one place type gets big.
+.lede {
+	font-size: 1.375rem;
+	line-height: 1.55;
+	font-weight: 300;
+	color: $ink;
+	margin: 0 0 1.25rem;
+	max-width: 34em;
+
+	@media (min-width: $bp-wide) {
+		font-size: 1.5rem;
+	}
+}
+
+// Scan line under the lede: the three things worth remembering.
+.lede-focus {
+	font-family: $mono-font-family;
+	font-size: 0.8125rem;
+	line-height: 1.7;
+	color: $ink-faint;
+	margin: 0 0 3rem;
+
+	.sep {
+		color: $vermilion;
+		margin: 0 0.4rem;
+	}
+}
+
+/*
+*	Sections
+*/
+.sec {
+	margin-bottom: 3.5rem;
+	scroll-margin-top: 2rem;
+}
+
+.sec-head {
+	display: flex;
+	align-items: baseline;
+	gap: 0.75rem;
+	border-bottom: 1px solid $rule;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.sec-title {
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	font-weight: 500;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: $ink-muted;
+	margin: 0;
+	line-height: 1;
+
+	&::before {
+		content: "";
+		display: inline-block;
+		width: 6px;
+		height: 6px;
+		background-color: $vermilion;
+		margin-right: 0.6rem;
+		vertical-align: 0.05em;
+	}
+}
+
+// Right-aligned count: makes the section's headroom visible.
+.sec-count {
+	margin-left: auto;
+	font-family: $mono-font-family;
+	font-size: 0.6875rem;
+	color: $ink-faint;
+	letter-spacing: 0.08em;
+}
+
+.prose {
+	max-width: 38em;
+	color: $ink;
+	p { margin: 0 0 1rem; }
+}
+
+/*
+*	Work — the project list. Loops over data; never assumes a count.
+*/
+.works {
+	@extend %default-ul;
+}
+
+.work {
+	display: grid;
+	grid-template-columns: 3rem minmax(0, 1fr);
+	gap: 0 1rem;
+	padding: 1.25rem 0;
+	border-top: 1px solid $rule;
+
+	&:first-child { border-top: none; padding-top: 0; }
+}
+
+.work-id {
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	color: $ink-faint;
+	padding-top: 0.35em;
+	letter-spacing: 0.04em;
+	transition: color 0.14s ease;
+}
+
+.work:hover .work-id { color: $vermilion; }
+
+.work-title {
+	font-size: 1.0625rem;
+	font-weight: 600;
+	line-height: 1.35;
+	color: $ink;
+	margin: 0 0 0.35rem;
+}
+
+// The one-liner. This is the line people remember, so it gets the accent.
+.work-hook {
+	font-size: 0.9375rem;
+	font-style: italic;
+	line-height: 1.5;
+	color: $bamboo;
+	margin: 0 0 0.5rem;
+	max-width: 40em;
+}
+
+.work-detail {
+	font-size: 0.875rem;
+	line-height: 1.65;
+	color: $ink-muted;
+	margin: 0;
+	max-width: 42em;
+}
+
+// Trailing placeholder: headroom the visitor can actually see, not a hidden gap.
+// Its wording comes from profile.json `labels`, so it is data, not markup.
+.work--todo,
+.tl-item--todo {
+	border-top: 1px dashed $rule;
+}
+
+.work-more {
+	// Latin from the mono face, Han glyphs from the serif fallback.
+	font-family: $mono-font-family, $han-font-family;
+	font-size: 0.8125rem;
+	line-height: 1.6;
+	color: $ink-faint;
+	margin: 0;
+	padding-top: 0.2em;
+}
+
+/*
+*	Publications — the section stands whether or not it has entries.
+*/
+.empty-note {
+	font-family: $base-font-family, $han-font-family;
+	font-size: 0.9375rem;
+	color: $ink-muted;
+	background-color: $paper-raised;
+	border: 1px dashed $rule;
+	border-radius: $base-border-radius;
+	padding: 1rem 1.25rem;
+	margin: 0;
+}
+
+/*
+*	Timeline
+*/
+.timeline {
+	@extend %default-ul;
+}
+
+.tl-item {
+	display: grid;
+	grid-template-columns: 8.5rem minmax(0, 1fr);
+	gap: 0 1rem;
+	padding: 0.85rem 0;
+	border-top: 1px solid $rule;
+
+	&:first-child { border-top: none; padding-top: 0; }
+
+	@media (max-width: $bp-wide) {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.15rem;
+	}
+}
+
+.tl-when {
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	color: $bamboo;
+	padding-top: 0.3em;
+	letter-spacing: 0.02em;
+}
+
+.tl-what {
+	font-size: 0.9375rem;
+	font-weight: 500;
+	color: $ink;
+	margin: 0 0 0.15rem;
+}
+
+.tl-detail {
+	font-size: 0.8438rem;
+	line-height: 1.6;
+	color: $ink-muted;
+	margin: 0;
+	max-width: 42em;
+}
+
+/*
+*	Skills
+*/
+.skills {
+	@extend %default-ul;
+}
+
+.skill-group {
+	display: grid;
+	grid-template-columns: 8.5rem minmax(0, 1fr);
+	gap: 0 1rem;
+	padding: 0.6rem 0;
+
+	@media (max-width: $bp-wide) {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.3rem;
+	}
+}
+
+.skill-name {
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	color: $ink-muted;
+	padding-top: 0.25em;
+	letter-spacing: 0.02em;
+}
+
+.skill-items {
+	@extend %default-ul;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.chip {
+	font-size: 0.75rem;
+	line-height: 1;
+	padding: 0.35rem 0.55rem;
+	background-color: $paper-raised;
+	border: 1px solid $rule;
+	border-radius: $base-border-radius;
+	color: $ink;
+	white-space: nowrap;
+}
+
+/*
+*	Writing — post list (homepage teaser and /blog/ alike)
+*/
+.posts {
+	@extend %default-ul;
+}
+
+.post-item {
+	display: grid;
+	grid-template-columns: 8.5rem minmax(0, 1fr);
+	gap: 0 1rem;
+	padding: 0.9rem 0;
+	border-top: 1px solid $rule;
+
+	&:first-child { border-top: none; padding-top: 0; }
+
+	@media (max-width: $bp-wide) {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.15rem;
+	}
+}
+
+.post-when {
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	color: $bamboo;
+	padding-top: 0.3em;
+}
+
+.post-item-title {
+	font-size: 0.9375rem;
+	font-weight: 500;
+	margin: 0 0 0.15rem;
+	line-height: 1.4;
+
+	a { color: $ink; text-decoration: none; }
+	a:hover { color: $vermilion; text-decoration: underline; }
+}
+
+.post-excerpt {
+	font-size: 0.8438rem;
+	line-height: 1.6;
+	color: $ink-muted;
+	margin: 0;
+	max-width: 42em;
+}
+
+.sec-more {
+	margin-top: 1.25rem;
+	font-family: $mono-font-family;
+	font-size: 0.8125rem;
+}
+
+/*
+*	Contact
+*/
+.contact-list {
+	@extend %default-ul;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.75rem;
+	font-size: 0.9375rem;
+
+	i {
+		width: 1.25em;
+		text-align: center;
+		margin-right: 0.4em;
+		color: $ink-faint;
+	}
+}
+
+/*
+*	Single post / single page (blog article body)
+*/
+.article {
+	max-width: 40em;
+
+	.article-title {
+		font-size: 1.875rem;
+		font-weight: 600;
+		line-height: 1.25;
+		letter-spacing: -0.01em;
+		margin: 0 0 0.5rem;
+	}
+
+	.article-meta {
+		font-family: $mono-font-family;
+		font-size: 0.75rem;
+		color: $ink-faint;
+		margin: 0 0 2rem;
+
+		a { color: $bamboo; }
+	}
+
+	.article-body {
+		h2 { font-size: 1.375rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+		h3 { font-size: 1.125rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+		img { max-width: 100%; height: auto; }
+	}
+
+	.article-nav {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 3rem;
+		padding-top: 1rem;
+		border-top: 1px solid $rule;
+		font-size: 0.8438rem;
+	}
+}
+
+/*
+*	Pagination (/blog/)
+*/
+.pagination {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 2.5rem;
+	padding-top: 1rem;
+	border-top: 1px solid $rule;
+	font-family: $mono-font-family;
+	font-size: 0.8125rem;
+	color: $ink-faint;
+
+	a { color: $vermilion; }
+	.page-number { margin-left: auto; }
+}
+
+/*
+*	Colophon — sits under the stream, aligned with the content column.
+*/
+.colophon {
+	margin-top: 4rem;
+	padding: 1.5rem 0 3rem;
+	border-top: 1px solid $rule;
+	font-family: $mono-font-family;
+	font-size: 0.75rem;
+	line-height: 1.8;
+	color: $ink-faint;
+
+	a {
+		color: $ink-muted;
+		text-decoration: none;
+		&:hover { color: $vermilion; text-decoration: underline; }
+	}
+
+	.colophon-brand b {
+		color: $vermilion;
+		font-weight: 500;
 	}
 }
