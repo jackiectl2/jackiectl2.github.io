@@ -1,0 +1,128 @@
+{{/*
+  Custom motion + colour layer.
+
+  Injected through Hugo Blox's `head-end` hook, so none of the theme's own files
+  are patched and the module can still be upgraded.
+
+  Everything here is disabled automatically for visitors who ask their OS for
+  reduced motion.
+*/}}
+<style>
+  /* ---------------------------------------------------------------------
+     Section headings cycle through the brand gradient.
+     --------------------------------------------------------------------- */
+  @keyframes hb-hue-drift {
+    to { background-position: 300% center; }
+  }
+
+  h2.font-bold,
+  h3.font-bold,
+  div.text-3xl.font-bold,
+  .blox-heading {
+    background-image: linear-gradient(
+      90deg,
+      #4f46e5 0%,
+      #0ea5e9 20%,
+      #0d9488 40%,
+      #7c3aed 60%,
+      #4f46e5 80%,
+      #0ea5e9 100%
+    );
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: hb-hue-drift 8s linear infinite;
+  }
+
+  /* The gradient-mesh backdrop breathes instead of sitting still. */
+  @keyframes hb-mesh-drift {
+    0%   { filter: hue-rotate(0deg)   saturate(1);    }
+    50%  { filter: hue-rotate(24deg)  saturate(1.18); }
+    100% { filter: hue-rotate(0deg)   saturate(1);    }
+  }
+
+  [class*="gradient-mesh"],
+  [class*="gradient_mesh"] {
+    animation: hb-mesh-drift 18s ease-in-out infinite;
+  }
+
+  /* ---------------------------------------------------------------------
+     Hover interactions
+     --------------------------------------------------------------------- */
+
+  /* Social icons: lift and tilt. */
+  @keyframes hb-nudge {
+    0%, 100% { transform: translateY(0)     rotate(0deg);   }
+    30%      { transform: translateY(-6px)  rotate(-8deg);  }
+    60%      { transform: translateY(-2px)  rotate(5deg);   }
+  }
+
+  a[href^="mailto"]:hover,
+  a[href*="github.com"]:hover,
+  a[href*="linkedin.com"]:hover {
+    animation: hb-nudge 0.5s ease;
+    display: inline-block;
+  }
+
+  /* Cards (education, research, awards) rise toward the cursor. */
+  article,
+  [class*="rounded-"][class*="shadow"] {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  article:hover,
+  [class*="rounded-"][class*="shadow"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -12px rgba(79, 70, 229, 0.28);
+  }
+
+  /* The CV button keeps its gradient moving. */
+  a[href*="resume.pdf"] {
+    background-size: 200% auto;
+    transition: background-position 0.5s ease, transform 0.2s ease;
+  }
+
+  a[href*="resume.pdf"]:hover {
+    background-position: right center;
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* Interest pills fill in on hover. */
+  .rounded-full:hover {
+    transform: translateY(-2px);
+    transition: transform 0.18s ease;
+  }
+
+  /* ---------------------------------------------------------------------
+     Respect the visitor's motion preference. Non-negotiable: some people get
+     genuinely sick from this kind of thing.
+     --------------------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    h2.font-bold,
+    h3.font-bold,
+    div.text-3xl.font-bold,
+    .blox-heading,
+    [class*="gradient-mesh"],
+    [class*="gradient_mesh"],
+    a[href^="mailto"]:hover,
+    a[href*="github.com"]:hover,
+    a[href*="linkedin.com"]:hover {
+      animation: none;
+    }
+
+    h2.font-bold,
+    h3.font-bold,
+    div.text-3xl.font-bold,
+    .blox-heading {
+      -webkit-text-fill-color: initial;
+      color: #111827;
+    }
+
+    article,
+    [class*="rounded-"][class*="shadow"] {
+      transition: none;
+    }
+  }
+</style>
