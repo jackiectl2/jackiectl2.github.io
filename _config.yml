@@ -13,8 +13,6 @@ exclude:
   - tools
   - README.md
   - LICENSE.md
-  - circle.yml
-  - stackbit.yaml
 
 # Site settings
 title: Tianlang (Jackie) Chen
