@@ -15,6 +15,18 @@ layout: default
   the headroom is something a visitor can actually see.
 -->
 
+<section class="sec" id="about">
+  <div class="sec-head">
+    <h2 class="sec-title">About</h2>
+  </div>
+
+  <div class="prose">
+    {% for para in p.bio_long %}
+    <p>{{ para }}</p>
+    {% endfor %}
+  </div>
+</section>
+
 <section class="sec" id="work">
   <div class="sec-head">
     <h2 class="sec-title">Work</h2>

@@ -39,6 +39,8 @@ highlightjs_theme: "github"
 # Left-rail navigation. The anchors live on the homepage, so they resolve from
 # any page on the site.
 nav:
+  - label: about
+    url: /#about
   - label: work
     url: /#work
   - label: publications
