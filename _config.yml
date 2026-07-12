@@ -51,6 +51,9 @@ nav:
     url: /blog/
   - label: contact
     url: /#contact
+  # Rebuild the PDF with tools/build-cv.sh after any change to ../cv.
+  - label: cv
+    url: /assets/Tianlang-Chen-CV.pdf
 
 # The glyph carved into the seal at the top of the rail. Brand mark, not code —
 # set it to whatever you want stamped there, or "" to drop the seal entirely.
