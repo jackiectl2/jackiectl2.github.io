@@ -1,4 +1,4 @@
-# CLAUDE.md — site-2d (jackiectl.github.io)
+# CLAUDE.md — site-2d (jackiectl2.github.io)
 
 Project memory for the 2D personal site. The parent `personal_website/CLAUDE.md` and
 the user-level `~/.claude/CLAUDE.md` both load automatically; this file adds only
@@ -9,7 +9,7 @@ what is specific to this repo. **Code and comments here are English-only.**
 A **Hugo Blox** site, built on the [Academic CV](https://github.com/HugoBlox/hugo-theme-academic-cv)
 template (**MIT** — `LICENSE.md` must stay verbatim). Static site, deployed to
 GitHub Pages by GitHub Actions. Default branch `master`. Live:
-<https://jackiectl.github.io>.
+<https://jackiectl2.github.io>.
 
 ### History: this repo used to be something else
 
@@ -123,12 +123,37 @@ screenshot artifact, not a broken image. Check a short page to confirm.
 `~/bin` (put `$HOME/.TinyTeX/bin/x86_64-linux` on PATH), and **latexmk replays its
 cached failure** until the outdir is wiped.
 
+## Which GitHub account owns this
+
+**This repo belongs to `jackiectl2`, not `jackiectl`.** `origin` is
+`github-jackiectl2:jackiectl2/jackiectl2.github.io.git` — an SSH host alias defined in
+`~/.ssh/config` that pins the `jackiectl2` key. Commits are authored with
+`305351710+jackiectl2@users.noreply.github.com` (set as a **local** `user.email` here,
+so it holds even if the global config points elsewhere).
+
+A user page is served at `<username>.github.io` only when the repo name equals the
+owner's username, so this repo has to keep the name `jackiectl2.github.io`. `baseURL`
+in `config/_default/hugo.yaml` must match it — absolute URLs (canonical tags, RSS,
+sitemap, OpenGraph) are generated from it, not from the remote.
+
+The older site at `jackiectl/jackiectl.github.io` is still public and still serving.
+It is a separate repo under a separate account; nothing here updates it.
+
+⚠ The **site's own outbound GitHub link** (`data/authors/me.yaml` → `github.com/jackiectl`,
+generated from `profile.json`) still points at the original account, which is what the CV
+prints too. Hosting account and displayed identity are deliberately separate — do not
+"fix" one to match the other without asking.
+
 ## Deployment
 
 Actions builds and publishes on every push to `master`. Pages was enabled by the
 workflow itself via `actions/configure-pages` with `enablement: true` — the
 **fine-grained PAT cannot enable Pages** (`POST /repos/{o}/{r}/pages` → 403). The PAT
 *can* push workflow files.
+
+🔴 **On `jackiectl2` this repo is currently private, and Pages is not enabled** — GitHub
+publishes Pages from a private repo only on a paid plan. Until the repo is public (or the
+account upgraded), pushes build nothing and `https://jackiectl2.github.io` returns 404.
 
 **No custom domain.** `github.io` is free and sufficient; `jackiectl.com` is reserved
 for the 3D site only.

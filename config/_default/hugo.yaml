@@ -6,7 +6,7 @@
 # Website name (set in params.yaml under hugoblox.branding.name)
 title: "Tianlang (Jackie) Chen"
 # Website URL
-baseURL: 'https://jackiectl.github.io/'
+baseURL: 'https://jackiectl2.github.io/'
 
 ############################
 ## LANGUAGE

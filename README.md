@@ -1,7 +1,7 @@
-# jackiectl.github.io
+# jackiectl2.github.io
 
 Personal site of **Tianlang (Jackie) Chen** — B.S.E. Data Science, University of
-Michigan, Ann Arbor. Live at <https://jackiectl.github.io>.
+Michigan, Ann Arbor. Live at <https://jackiectl2.github.io>.
 
 ## Credit
 
