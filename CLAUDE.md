@@ -146,14 +146,18 @@ prints too. Hosting account and displayed identity are deliberately separate —
 
 ## Deployment
 
-Actions builds and publishes on every push to `master`. Pages was enabled by the
-workflow itself via `actions/configure-pages` with `enablement: true` — the
-**fine-grained PAT cannot enable Pages** (`POST /repos/{o}/{r}/pages` → 403). The PAT
-*can* push workflow files.
+Actions builds and publishes on every push to `master`.
 
-🔴 **On `jackiectl2` this repo is currently private, and Pages is not enabled** — GitHub
-publishes Pages from a private repo only on a paid plan. Until the repo is public (or the
-account upgraded), pushes build nothing and `https://jackiectl2.github.io` returns 404.
+**Pages had to be enabled by hand**, once, with
+`gh api -X POST repos/jackiectl2/jackiectl2.github.io/pages -f build_type=workflow`.
+`build.yml` calls `actions/configure-pages@v5` **without** `enablement: true`, so the
+workflow does *not* create the Pages site on its own — `deploy-pages` just fails until
+one exists. (An earlier note here claimed the workflow enabled it; that was wrong.)
+The `jackiectl2` OAuth token from `gh auth login` (scope `repo`) *can* call that
+endpoint; the old **fine-grained** PAT on the `jackiectl` account could not — it got 403.
+
+Pages also refuses to publish a **private** repo on a free plan, which is why
+`jackiectl2/jackiectl2.github.io` was switched to public.
 
 **No custom domain.** `github.io` is free and sufficient; `jackiectl.com` is reserved
 for the 3D site only.
