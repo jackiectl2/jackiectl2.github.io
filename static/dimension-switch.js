@@ -5,8 +5,8 @@
     const switchLink = document.createElement("a");
     switchLink.className = "dimension-corner-link";
     switchLink.href = carUrl;
-    switchLink.textContent = "3D Car ↗";
-    switchLink.setAttribute("aria-label", "Switch to the 3D car website");
+    switchLink.textContent = "3D Website ↗";
+    switchLink.setAttribute("aria-label", "Switch to the 3D website");
     document.body.appendChild(switchLink);
 
     const url = new URL(window.location.href);
@@ -26,20 +26,19 @@
       <section data-stage="welcome">
         <p class="dimension-choice-kicker">TIANLANG (JACKIE) CHEN · PERSONAL WEBSITE</p>
         <h1 id="dimension-welcome-title">Welcome to Jackie's Website.</h1>
-        <p class="dimension-choice-lead">This is my personal website. I share my education, research, and projects here in two different ways.</p>
+        <p class="dimension-choice-lead">This is my personal website. You can explore it in 3D or 2D.</p>
         <div class="dimension-choice-actions welcome">
           <button class="dimension-choice-action primary" type="button" data-continue>Continue <span aria-hidden="true">→</span></button>
         </div>
       </section>
       <section data-stage="choice" hidden>
         <p class="dimension-choice-kicker">TIANLANG (JACKIE) CHEN · PERSONAL WEBSITE</p>
-        <h1 id="dimension-choice-title" tabindex="-1">Choose your dimension.</h1>
-        <p class="dimension-choice-lead">Explore the same personal journey in an interactive 3D car ride, or read it here as a 2D website.</p>
+        <h1 id="dimension-choice-title" tabindex="-1">Choose a version.</h1>
+        <p class="dimension-choice-lead">How would you like to explore my website?</p>
         <div class="dimension-choice-actions">
-          <a class="dimension-choice-action primary" href="${carUrl}">Enter the 3D Car Website <span aria-hidden="true">↗</span></a>
-          <button class="dimension-choice-action secondary" type="button" data-enter-2d>Continue to the 2D Website <span aria-hidden="true">→</span></button>
+          <a class="dimension-choice-action primary" href="${carUrl}">Enter 3D Website <span aria-hidden="true">↗</span></a>
+          <button class="dimension-choice-action secondary" type="button" data-enter-2d>Enter 2D Website <span aria-hidden="true">→</span></button>
         </div>
-        <p class="dimension-choice-note">The 3D car ride works best on a desktop browser.</p>
       </section>
     `;
     document.body.appendChild(dialog);
