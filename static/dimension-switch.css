@@ -50,6 +50,10 @@
   backdrop-filter: blur(8px);
 }
 
+.dimension-choice [hidden] {
+  display: none;
+}
+
 .dimension-choice-kicker {
   margin: 0 0 24px;
   color: #5046bd;
@@ -78,6 +82,10 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 32px;
+}
+
+.dimension-choice-actions.welcome {
+  grid-template-columns: minmax(0, 270px);
 }
 
 .dimension-choice-action {
@@ -117,6 +125,7 @@
 
 @media (max-width: 600px) {
   .dimension-corner-link { top: 68px; right: 12px; padding: 0 12px; }
-  .dimension-choice-actions { grid-template-columns: 1fr; }
+  .dimension-choice-actions,
+  .dimension-choice-actions.welcome { grid-template-columns: 1fr; }
   .dimension-choice-lead { font-size: 15px; }
 }
