@@ -25,6 +25,7 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent.parent
 SRC = HERE.parent / "profile-readme" / "data" / "profile.json"
+PUBLIC_GITHUB_USERNAME = "jackiectl2"
 
 
 def q(s: str) -> str:
@@ -69,7 +70,7 @@ links:
     url: mailto:{ident['email']}
     label: E-mail Me
   - icon: brands/github
-    url: https://github.com/{ident['github']}
+    url: https://github.com/{PUBLIC_GITHUB_USERNAME}
   - icon: brands/linkedin
     url: {linkedin}
 

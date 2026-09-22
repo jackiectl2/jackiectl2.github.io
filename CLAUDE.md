@@ -139,10 +139,10 @@ sitemap, OpenGraph) are generated from it, not from the remote.
 The older site at `jackiectl/jackiectl.github.io` is still public and still serving.
 It is a separate repo under a separate account; nothing here updates it.
 
-⚠ The **site's own outbound GitHub link** (`data/authors/me.yaml` → `github.com/jackiectl`,
-generated from `profile.json`) still points at the original account, which is what the CV
-prints too. Hosting account and displayed identity are deliberately separate — do not
-"fix" one to match the other without asking.
+The site's outbound GitHub link points to `github.com/jackiectl2`. Keep the
+`PUBLIC_GITHUB_USERNAME` override in `tools/sync-profile.py` when regenerating
+`data/authors/me.yaml`; the older `profile.json` source still names `jackiectl`.
+The downloadable CV PDF also prints and links to `github.com/jackiectl2`.
 
 ## Deployment
 
