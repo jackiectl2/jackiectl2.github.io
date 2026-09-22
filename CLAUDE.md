@@ -142,7 +142,7 @@ It is a separate repo under a separate account; nothing here updates it.
 The site's outbound GitHub link points to `github.com/jackiectl2`. Keep the
 `PUBLIC_GITHUB_USERNAME` override in `tools/sync-profile.py` when regenerating
 `data/authors/me.yaml`; the older `profile.json` source still names `jackiectl`.
-The downloadable CV is a separate PDF and still prints the old account URL.
+The downloadable CV PDF also prints and links to `github.com/jackiectl2`.
 
 ## Deployment
 
