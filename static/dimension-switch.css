@@ -1,21 +1,18 @@
 .dimension-corner-link {
-  position: fixed;
-  z-index: 1000;
-  top: 76px;
-  right: 20px;
   display: inline-flex;
   min-height: 38px;
   align-items: center;
+  flex-shrink: 0;
   padding: 0 16px;
-  border: 1px solid rgba(99, 102, 241, 0.28);
+  border: 1px solid #4f46e5;
   border-radius: 999px;
   color: #3730a3;
-  background: rgba(255, 255, 255, 0.93);
+  background: #eef2ff;
   box-shadow: 0 8px 25px rgba(79, 70, 229, 0.14);
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-  backdrop-filter: blur(12px);
+  white-space: nowrap;
 }
 
 .dimension-corner-link:hover {
@@ -146,7 +143,7 @@
 }
 
 @media (max-width: 600px) {
-  .dimension-corner-link { top: 68px; right: 12px; padding: 0 12px; }
+  .dimension-corner-link { padding: 0 10px; font-size: 11px; }
   .dimension-choice-actions,
   .dimension-choice-actions.welcome { grid-template-columns: 1fr; }
   .dimension-choice-lead { font-size: 15px; }

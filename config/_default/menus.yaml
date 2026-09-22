@@ -16,3 +16,6 @@ main:
   - name: Additional
     url: /#additional
     weight: 50
+  - name: 3D Website ↗
+    url: https://car.jackiectl.com/?view=3d
+    weight: 60

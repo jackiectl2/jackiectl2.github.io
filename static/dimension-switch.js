@@ -2,12 +2,16 @@
   const carUrl = "https://car.jackiectl.com/?view=3d";
 
   function init() {
-    const switchLink = document.createElement("a");
-    switchLink.className = "dimension-corner-link";
-    switchLink.href = carUrl;
-    switchLink.textContent = "3D Website ↗";
-    switchLink.setAttribute("aria-label", "Switch to the 3D website");
-    document.body.appendChild(switchLink);
+    const switchLink = document.querySelector(`#nav-menu a[href="${carUrl}"]`);
+    const headerActions = document.querySelector("#site-header [data-search-toggle]")?.parentElement;
+    if (switchLink && headerActions) {
+      const menuItem = switchLink.parentElement;
+      switchLink.classList.add("dimension-corner-link");
+      switchLink.setAttribute("aria-label", "Switch to the 3D website");
+      switchLink.removeAttribute("target");
+      headerActions.prepend(switchLink);
+      menuItem.remove();
+    }
 
     const url = new URL(window.location.href);
     const enter2d = url.searchParams.get("view") === "2d";
