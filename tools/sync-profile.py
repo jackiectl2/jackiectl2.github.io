@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Regenerate this site's content from the single source of truth.
+"""Regenerate this site's profile and synchronized public resume content.
 
 PROFILE.md (in the private pw-meta repo) is the authoritative "who I am". It is
 projected into profile-readme/data/profile.json, and this script projects *that*
 into the two places Hugo reads:
 
     data/authors/me.yaml     the profile: bio, education, internship, skills, ...
-    content/projects/<id>/   one folder per research project
+    content/projects/<id>/   the four Research cards shared with the 3D site
 
 Run it after any change to profile.json, then commit the result. Nothing here is
 hand-maintained; editing me.yaml directly means the next run overwrites you.
@@ -14,8 +14,9 @@ hand-maintained; editing me.yaml directly means the next run overwrites you.
     tools/sync-profile.py            regenerate
     tools/sync-profile.py --check    exit non-zero if the checked-in files are stale
 
-Cover images (content/projects/*/featured.png) are NOT touched — they are assets,
-and regenerating content must not delete them.
+Identity and skills come from profile.json. The public bio, Mars Internship, and
+four Research descriptions below intentionally match the 3D website. Cover images
+(content/projects/*/featured.png) are not touched.
 """
 
 import argparse
@@ -26,6 +27,44 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent.parent
 SRC = HERE.parent / "profile-readme" / "data" / "profile.json"
 PUBLIC_GITHUB_USERNAME = "jackiectl2"
+PUBLIC_ROLE = "B.S.E. Candidate · Data Science"
+PUBLIC_BIO = (
+    "I work across machine learning, scientific data, and full-stack tools "
+    "for research."
+)
+PUBLIC_INTERNSHIP = {
+    "role": "WeCom Full-Stack Development",
+    "org": "Mars Asia · Global IT Service Center",
+    "start": "2024-06-01",
+    "end": "2025-05-31",
+    "summary": (
+        "Contributed to internal WeCom tools with JavaScript, Node.js, and "
+        "Vue.js, supporting APIs, interfaces, data migration, information "
+        "retrieval, and workflow automation."
+    ),
+}
+PUBLIC_RESEARCH = [
+    {
+        "id": "r1",
+        "title": "Scalable Split Learning and Quantization for Vision–Language Models in Medicine",
+        "summary": "Studying multi-server split learning, low-bit representation transfer, and privacy–utility trade-offs in medical visual question answering.",
+    },
+    {
+        "id": "r2",
+        "title": "Foundation-Model Fine-Tuning for Regulatory Genomics",
+        "summary": "Fine-tuning EPCOT on single-cell multi-omics data to predict gene expression from chromatin accessibility, with reproducible preprocessing and cell-specific evaluation.",
+    },
+    {
+        "id": "r3",
+        "title": "LLM-Assisted Incentive Design for Mobility Systems",
+        "summary": "Using structured LLM simulations, bandits, and budget constraints to study data-driven incentives for heterogeneous travelers.",
+    },
+    {
+        "id": "r4",
+        "title": "AI-Assisted Platform for Scientific Data Analytics",
+        "summary": "Building a full-stack workflow for materials-science data preparation, interactive model fitting, and human-verified AI assistance.",
+    },
+]
 
 
 def q(s: str) -> str:
@@ -57,9 +96,9 @@ name:
   given: Tianlang
   family: Chen
   alternate: {q(ident['name_zh'])}
-role: {q(ident['role'])}
+role: {q(PUBLIC_ROLE)}
 bio: |
-  {d['bio_long'][0]}
+  {PUBLIC_BIO}
 
 affiliations:
   - name: {q(ident['affiliation'])}
@@ -96,14 +135,12 @@ education:
       Dynamics & Vibrations.
 
 experience:
-  - role: WeCom Full-Stack Developer, Intern
-    org: Mars Asia — Global IT Service Center
-    start: 2024-06-01
-    end: 2025-05-31
+  - role: {PUBLIC_INTERNSHIP['role']}
+    org: {PUBLIC_INTERNSHIP['org']}
+    start: {PUBLIC_INTERNSHIP['start']}
+    end: {PUBLIC_INTERNSHIP['end']}
     summary: |
-      Full-stack WeCom development in JavaScript, Node.js and Vue.js. API and
-      interface work, data migration, and cross-platform retrieval. Built the
-      automation that kept operations continuous through a system migration.
+      {PUBLIC_INTERNSHIP['summary']}
 
 skills:
 {skills}
@@ -132,29 +169,20 @@ awards:
 
 
 def project_pages(d: dict) -> dict:
-    """slug -> index.md. One per research entry, plus the visible placeholder."""
+    """Return the four public research pages shared with the 3D website."""
     pages = {}
-    for r in d["research"]:
-        pages[r["id"].lower()] = f"""---
+    for r in PUBLIC_RESEARCH:
+        pages[r["id"]] = f"""---
 title: {q(r['title'])}
-summary: {q(r['hook'])}
+summary: {q(r['summary'])}
 date: 2026-01-01
 tags:
   - Research
 ---
 
-{r['detail']}
-"""
-    # The trailing card. Headroom the visitor can see, not a silent gap.
-    pages["more"] = f"""---
-title: {q(d['labels']['research_more'])}
-summary: More work is on the way — this slot exists so the room to grow is visible.
-date: 2025-12-31
-tags:
-  - Research
----
+**University of Michigan · 2026–present**
 
-More projects are in progress.
+{r['summary']}
 """
     return pages
 

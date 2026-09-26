@@ -8,9 +8,9 @@ name:
   given: Tianlang
   family: Chen
   alternate: "陈天朗"
-role: "B.S.E. Candidate, Data Science"
+role: "B.S.E. Candidate · Data Science"
 bio: |
-  I study Data Science at the University of Michigan, Ann Arbor. I came here through the UM-SJTU dual-degree program: the first half of my undergraduate degree was Mechanical Engineering at Shanghai Jiao Tong University's Joint Institute, the second half is Data Science at Michigan. It was less a change of heart than a change of tools.
+  I work across machine learning, scientific data, and full-stack tools for research.
 
 affiliations:
   - name: "University of Michigan, Ann Arbor"
@@ -47,14 +47,12 @@ education:
       Dynamics & Vibrations.
 
 experience:
-  - role: WeCom Full-Stack Developer, Intern
-    org: Mars Asia — Global IT Service Center
+  - role: WeCom Full-Stack Development
+    org: Mars Asia · Global IT Service Center
     start: 2024-06-01
     end: 2025-05-31
     summary: |
-      Full-stack WeCom development in JavaScript, Node.js and Vue.js. API and
-      interface work, data migration, and cross-platform retrieval. Built the
-      automation that kept operations continuous through a system migration.
+      Contributed to internal WeCom tools with JavaScript, Node.js, and Vue.js, supporting APIs, interfaces, data migration, information retrieval, and workflow automation.
 
 skills:
   - name: "Languages"
