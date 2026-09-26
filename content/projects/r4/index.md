@@ -1,9 +1,11 @@
 ---
-title: "Applets for Data Analytics in Materials Science"
-summary: "Turning materials-science analysis into something you can just... upload a CSV to."
+title: "AI-Assisted Platform for Scientific Data Analytics"
+summary: "Building a full-stack workflow for materials-science data preparation, interactive model fitting, and human-verified AI assistance."
 date: 2026-01-01
 tags:
   - Research
 ---
 
-JavaScript front end + Python back end serving the materials community: users upload datasets and analyze them with SOTA models and fitting methods, built as reusable FAIR-compliant modules.
+**University of Michigan · 2026–present**
+
+Building a full-stack workflow for materials-science data preparation, interactive model fitting, and human-verified AI assistance.

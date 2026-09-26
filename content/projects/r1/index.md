@@ -1,9 +1,11 @@
 ---
-title: "LLM for Incentive Design in Mobility Systems"
-summary: "Can an LLM design the incentives that make shared mobility actually work?"
+title: "Scalable Split Learning and Quantization for Vision–Language Models in Medicine"
+summary: "Studying multi-server split learning, low-bit representation transfer, and privacy–utility trade-offs in medical visual question answering."
 date: 2026-01-01
 tags:
   - Research
 ---
 
-An LLM-guided workflow that generates and evaluates interpretable incentive policies for ride-hailing, transit, and shared vehicles — pairing learning-based methods with classical optimization.
+**University of Michigan · 2026–present**
+
+Studying multi-server split learning, low-bit representation transfer, and privacy–utility trade-offs in medical visual question answering.
