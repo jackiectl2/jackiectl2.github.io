@@ -6,7 +6,7 @@ projected into profile-readme/data/profile.json, and this script projects *that*
 into the two places Hugo reads:
 
     data/authors/me.yaml     the profile: bio, education, internship, skills, ...
-    content/projects/<id>/   the four Research cards shared with the 3D site
+    content/projects/<id>/   four Research cards plus one next-entry placeholder
 
 Run it after any change to profile.json, then commit the result. Nothing here is
 hand-maintained; editing me.yaml directly means the next run overwrites you.
@@ -15,8 +15,9 @@ hand-maintained; editing me.yaml directly means the next run overwrites you.
     tools/sync-profile.py --check    exit non-zero if the checked-in files are stale
 
 Identity and skills come from profile.json. The public bio, Mars Internship, and
-four Research descriptions below intentionally match the 3D website. Cover images
-(content/projects/*/featured.png) are not touched.
+four Research descriptions below intentionally match the 3D website. Education,
+Internship, and Research each retain one visible next-entry placeholder. Cover
+images (content/projects/*/featured.png) are not touched.
 """
 
 import argparse
@@ -65,6 +66,7 @@ PUBLIC_RESEARCH = [
         "summary": "Building a full-stack workflow for materials-science data preparation, interactive model fitting, and human-verified AI assistance.",
     },
 ]
+ENTRY_PLACEHOLDER = "Reserved for your next entry. Replace this card when new information is ready."
 
 
 def q(s: str) -> str:
@@ -133,6 +135,10 @@ education:
     summary: |
       Applied Linear Algebra; Dynamical Systems; Design & Manufacturing;
       Dynamics & Vibrations.
+  - degree: Add another education entry
+    institution: Placeholder
+    summary: |
+      {ENTRY_PLACEHOLDER}
 
 experience:
   - role: {PUBLIC_INTERNSHIP['role']}
@@ -141,6 +147,10 @@ experience:
     end: {PUBLIC_INTERNSHIP['end']}
     summary: |
       {PUBLIC_INTERNSHIP['summary']}
+  - role: Add another internship entry
+    org: Placeholder
+    summary: |
+      {ENTRY_PLACEHOLDER}
 
 skills:
 {skills}
@@ -169,7 +179,7 @@ awards:
 
 
 def project_pages(d: dict) -> dict:
-    """Return the four public research pages shared with the 3D website."""
+    """Return four public research pages and one next-entry placeholder."""
     pages = {}
     for r in PUBLIC_RESEARCH:
         pages[r["id"]] = f"""---
@@ -183,6 +193,16 @@ tags:
 **University of Michigan · 2026–present**
 
 {r['summary']}
+"""
+    pages["more"] = f"""---
+title: "Add another research entry"
+summary: {q(ENTRY_PLACEHOLDER)}
+date: 2025-12-31
+tags:
+  - Research
+---
+
+{ENTRY_PLACEHOLDER}
 """
     return pages
 
