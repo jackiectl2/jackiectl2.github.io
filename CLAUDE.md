@@ -68,7 +68,8 @@ copyrightable); copying her stylesheets is not.
 - Skill progress bars only render `{{ if gt $level 0 }}` — so **omitting `level`** in
   the author YAML removes them. No override needed.
 - The collection block defaults to **`count: 5`**. It is explicitly `count: 0`
-  (unlimited), so the synchronized Research list is never silently capped.
+  (unlimited), so the four synchronized Research entries plus their reserved
+  next-entry placeholder are never silently capped.
 
 ## Local toolchain — three version walls (all worked around in scratch)
 

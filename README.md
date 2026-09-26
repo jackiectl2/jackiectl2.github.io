@@ -32,7 +32,8 @@ Motion is disabled automatically for visitors whose OS asks for reduced motion.
 No template assumes how many entries a list holds. Adding a project is one folder
 under `content/projects/`; adding a skill is one line in `data/authors/me.yaml`.
 The research collection is explicitly set to `count: 0` so all four synchronized
-research entries remain visible without a default cap.
+research entries and the reserved next-entry card remain visible without a default
+cap. Education and Internship also end with one clearly labeled placeholder.
 
 The **Publications** section renders even while it is empty ("In preparation"). It
 does not get deleted just because there is nothing in it yet.

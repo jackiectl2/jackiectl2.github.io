@@ -45,6 +45,10 @@ education:
     summary: |
       Applied Linear Algebra; Dynamical Systems; Design & Manufacturing;
       Dynamics & Vibrations.
+  - degree: Add another education entry
+    institution: Placeholder
+    summary: |
+      Reserved for your next entry. Replace this card when new information is ready.
 
 experience:
   - role: WeCom Full-Stack Development
@@ -53,6 +57,10 @@ experience:
     end: 2025-05-31
     summary: |
       Contributed to internal WeCom tools with JavaScript, Node.js, and Vue.js, supporting APIs, interfaces, data migration, information retrieval, and workflow automation.
+  - role: Add another internship entry
+    org: Placeholder
+    summary: |
+      Reserved for your next entry. Replace this card when new information is ready.
 
 skills:
   - name: "Languages"
